@@ -11,7 +11,6 @@ public class Sentence {
     private final int numClause;
     private final int numVars;
 
-
     public Sentence(int numClause, List<Variable> varList){
         this.numClause = numClause;
         this.numVars = varList.size();
@@ -68,24 +67,5 @@ public class Sentence {
     //Return a list of clauses that are not satisfied by the given interpretation
     public List<Clause> getUnsatisfiedClauses(Interpretation interpretation){
         return clauses.stream().filter(clause -> !clause.isSatisfied(interpretation)).collect(Collectors.toUnmodifiableList());
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-
-        int ctr = 0;
-
-        str.append("Sentence: ");
-        for (Clause clause: clauses) {
-            str.append(clause);
-            if (ctr < numClause - 1) {
-                str.append(" & ");
-            }
-            ctr ++;
-        }
-
-        return str.toString();
     }
 }
