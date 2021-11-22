@@ -28,9 +28,11 @@ public class Sentence {
     private void generateClauses(int varsPerClause){
         List<Variable> unusedVarList = new ArrayList<>(varList);
         Set<Clause> clausesSet = new HashSet<>();
-        int clausesLeft;
+        int clausesLeft = numClause;
 
-        while ((clausesLeft = numClause - clausesSet.size()) > 0) {
+        while (clausesLeft > 0) {
+            // clauses left to generate
+            clausesLeft = numClause - clausesSet.size();
             Clause clause = new Clause(varsPerClause, rnd);
             Variable var;
             do { // do this until clause.addToList returns false -> it is full
