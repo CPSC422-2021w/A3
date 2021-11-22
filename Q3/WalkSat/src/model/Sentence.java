@@ -10,12 +10,14 @@ public class Sentence {
     private final List<Variable> varList;
     private final int numClause;
     private final int numVars;
+    private final Random rnd;
 
-    public Sentence(int numClause, List<Variable> varList){
+    public Sentence(int numClause, List<Variable> varList, Random rnd){
         this.numClause = numClause;
         this.numVars = varList.size();
         clauses = new ArrayList<>();
         this.varList = varList;
+        this.rnd = rnd;
        generateClauses();
     }
 
@@ -29,14 +31,14 @@ public class Sentence {
         int clausesLeft;
 
         while ((clausesLeft = numClause - clausesSet.size()) > 0) {
-            Clause clause = new Clause();
+            Clause clause = new Clause(rnd);
             Variable var;
-            do {
-                boolean isTrue = WalkSat.RND.nextBoolean();
+            do { // do this until clause.addToList returns false -> it is full
+                boolean isTrue = rnd.nextBoolean();
                 if (unusedVarList.size() >= clausesLeft) {
                     var = getUnusedVar(unusedVarList, isTrue);
                 }else if (unusedVarList.size() > clausesLeft/2) {
-                    var = WalkSat.RND.nextBoolean() ? getRandomVar(isTrue) : getUnusedVar(unusedVarList, isTrue);
+                    var = rnd.nextBoolean() ? getRandomVar(isTrue) : getUnusedVar(unusedVarList, isTrue);
                 } else{
                     var = getRandomVar(isTrue);
                 }
@@ -48,12 +50,12 @@ public class Sentence {
     }
 
     private Variable getRandomVar(boolean isTrue) {
-        return new Variable(varList.get(WalkSat.RND.nextInt(numVars)).getId(), isTrue);
+        return new Variable(varList.get(rnd.nextInt(numVars)).getId(), isTrue);
     }
 
     // returns a variable that has not yet been used in any clause
     private Variable getUnusedVar(List<Variable> unusedVarList, boolean isTrue) {
-        int varNum = WalkSat.RND.nextInt(unusedVarList.size());
+        int varNum = rnd.nextInt(unusedVarList.size());
         Variable var = new Variable(unusedVarList.get(varNum).getId(), isTrue);
         unusedVarList.remove(varNum);
         return var;

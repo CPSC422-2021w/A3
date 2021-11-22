@@ -1,0 +1,12 @@
+Number of clauses,Number of completed runs,Median Number of Flips,Total Runs,C/N
+20,49,3,50,C/N = 1
+40,49,11,50,C/N = 2
+60,50,30,50,C/N = 3
+80,42,99,50,C/N = 4
+100,11,231,50,C/N = 5
+120,2,359,50,C/N = 6
+140,1,1326,50,C/N = 7
+160,0,0,50,C/N = 8
+180,0,0,50,C/N = 9
+200,0,0,50,C/N = 10
+50 threads, 50 completion/10s max, proper executerService shutdown

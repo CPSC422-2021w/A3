@@ -6,14 +6,14 @@ import java.util.*;
 
 public class Interpretation {
     private final Map<Integer, Variable> varMap;
-    public Interpretation(int numVars){
+    public Interpretation(int numVars, Random rnd){
         this.varMap = new HashMap<>();
-        generateVars(numVars);
+        generateVars(numVars, rnd);
     }
 
-    private void generateVars(int numVars){
+    private void generateVars(int numVars, Random rnd){
         for (int i = 0; i < numVars; i++) {
-            boolean isTrue = WalkSat.RND.nextBoolean();
+            boolean isTrue = rnd.nextBoolean();
             Variable var = new Variable(i, isTrue);
             varMap.put(i, var);
         }

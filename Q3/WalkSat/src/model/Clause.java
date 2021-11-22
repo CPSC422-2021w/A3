@@ -9,8 +9,10 @@ public class Clause implements Iterable<Variable>{
     public static final int VARS_PER_CLAUSE = WalkSat.VARS_PER_CLAUSE;
     private final Map<Integer, Variable> varMap;
     private final List<Integer> indexToIDList;
+    private final Random rnd;
 
-    public Clause(){
+    public Clause(Random rnd){
+        this.rnd = rnd;
         this.varMap = new HashMap<>();
         this.indexToIDList = new ArrayList<>();
     }
@@ -40,7 +42,7 @@ public class Clause implements Iterable<Variable>{
     }
 
     public Variable getRandomVar(){
-        return varMap.get(indexToIDList.get(WalkSat.RND.nextInt(VARS_PER_CLAUSE)));
+        return varMap.get(indexToIDList.get(rnd.nextInt(VARS_PER_CLAUSE)));
     }
 
     @Override

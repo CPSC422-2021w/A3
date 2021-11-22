@@ -1,0 +1,12 @@
+Number of clauses,Number of completed runs,Median Number of Flips,Total Runs,C/N
+20,50,3,50,C/N = 1
+40,50,9,50,C/N = 2
+60,50,34,50,C/N = 3
+80,38,192,50,C/N = 4
+100,15,387,50,C/N = 5
+120,4,218,50,C/N = 6
+140,0,0,50,C/N = 7
+160,0,0,50,C/N = 8
+180,0,0,50,C/N = 9
+200,0,0,50,C/N = 10
+500 threads started, 50 complete every 10 seconds, shared executorService for var flipping

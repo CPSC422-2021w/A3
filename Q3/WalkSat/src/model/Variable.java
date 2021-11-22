@@ -6,8 +6,8 @@ public class Variable {
     private boolean isTrue;
     private final int id;
 
-    public Variable(Integer name, boolean isTrue){
-        this.id = name;
+    public Variable(int id, boolean isTrue){
+        this.id = id;
         this.isTrue = isTrue;
     }
 

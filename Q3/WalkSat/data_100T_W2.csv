@@ -1,11 +1,12 @@
 Number of clauses,Number of completed runs,Median Number of Flips,Total Runs,C/N
 20,50,3,50,C/N = 1
-40,42,7,50,C/N = 2
-60,50,33,50,C/N = 3
-80,45,134,50,C/N = 4
-100,15,146,50,C/N = 5
-120,5,183,50,C/N = 6
+40,50,11,50,C/N = 2
+60,50,36,50,C/N = 3
+80,41,117,50,C/N = 4
+100,11,432,50,C/N = 5
+120,2,1895,50,C/N = 6
 140,0,0,50,C/N = 7
 160,0,0,50,C/N = 8
 180,0,0,50,C/N = 9
 200,0,0,50,C/N = 10
+100 simultanous threads (100 completion per 10s)

@@ -9,16 +9,17 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class Solver implements Callable<Integer> {
-    private static final int PROB_RND = WalkSat.PROB_RND; // (1-PROB_RND)% of the time, be greedy. (PROB_RND)% of the time, do random walk
-    private static final int numVars = WalkSat.numVars;
+    private final int PROB_RND_WALK; // (1-PROB_RND_WALK)% of the time, be greedy. (PROB_RND_WALK)% of the time, do random walk
     private final Sentence sentence;
     private final Interpretation interpretation;
     private final Map<Variable, Integer> numSatisfiedMap;
+    private final Random rnd = new Random();
 
-    public Solver(int numClauses) {
-        interpretation = new Interpretation(numVars);
+    public Solver(int numClauses, int PROB_RND, int numVars) {
+        this.PROB_RND_WALK = PROB_RND;
+        interpretation = new Interpretation(numVars, rnd);
         List<Variable> varList = new ArrayList<>(interpretation.getVarList());
-        sentence = new Sentence(numClauses, varList);
+        sentence = new Sentence(numClauses, varList, rnd);
         numSatisfiedMap = new HashMap<>();
     }
 
@@ -31,10 +32,10 @@ public class Solver implements Callable<Integer> {
         List<Clause> unsatisfiedClauses = sentence.getUnsatisfiedClauses(interpretation);
 
         while (!unsatisfiedClauses.isEmpty()) {
-            int nextClause = WalkSat.RND.nextInt(unsatisfiedClauses.size());
+            int nextClause = rnd.nextInt(unsatisfiedClauses.size());
             Clause clause = unsatisfiedClauses.get(nextClause);
             Variable varToFlip;
-            if (WalkSat.RND.nextInt(100) < PROB_RND) {
+            if (rnd.nextInt(100) < PROB_RND_WALK) {
                 varToFlip = clause.getRandomVar();
             } else {
                 varToFlip = getBestVarToFlip(clause);
