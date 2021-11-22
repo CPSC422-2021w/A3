@@ -40,6 +40,7 @@ public class Sentence {
                 if (unusedVarList.size() >= clausesLeft) {
                     var = getUnusedVar(unusedVarList, isTrue);
                 }else if (unusedVarList.size() > clausesLeft/2) {
+                    // 50% of the time, pick a random variable. 50% of the time, pick an unused variable.
                     var = rnd.nextBoolean() ? getRandomVar(isTrue) : getUnusedVar(unusedVarList, isTrue);
                 } else{
                     var = getRandomVar(isTrue);
@@ -51,11 +52,12 @@ public class Sentence {
         clauses.addAll(clausesSet);
     }
 
+    // Returns a new variable with a random ID taken from the variable list
     private Variable getRandomVar(boolean isTrue) {
         return new Variable(varList.get(rnd.nextInt(numVars)).getId(), isTrue);
     }
 
-    // returns a variable that has not yet been used in any clause
+    // returns a new variable with the same ID as one that not yet been used in any clause
     private Variable getUnusedVar(List<Variable> unusedVarList, boolean isTrue) {
         int varNum = rnd.nextInt(unusedVarList.size());
         Variable var = new Variable(unusedVarList.get(varNum).getId(), isTrue);
