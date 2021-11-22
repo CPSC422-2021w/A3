@@ -116,7 +116,8 @@ public class WalkSat {
     private Callable<String> runSolvingAlgorithm(int numClauses, List<Integer> numFlips, int j) {
         return () -> {
             ExecutorService executor = Executors.newSingleThreadExecutor();
-            Future<Integer> future = executor.submit(new Solver(numClauses, PROB_RND_WALK, NUM_VARS));
+            Solver solver = new Solver(numClauses, PROB_RND_WALK, NUM_VARS, VARS_PER_CLAUSE);
+            Future<Integer> future = executor.submit(solver);
             try {
                 int flips = future.get(TIMEOUT, TimeUnit.SECONDS);
                 numFlips.add(flips);

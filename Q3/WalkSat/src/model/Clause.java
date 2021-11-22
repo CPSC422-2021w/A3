@@ -6,12 +6,13 @@ import java.util.*;
 
 public class Clause implements Iterable<Variable>{
 
-    public static final int VARS_PER_CLAUSE = WalkSat.VARS_PER_CLAUSE;
     private final Map<Integer, Variable> varMap;
     private final List<Integer> indexToIDList;
     private final Random rnd;
+    private final int VARS_PER_CLAUSE;
 
-    public Clause(Random rnd){
+    public Clause(int varsPerClause, Random rnd){
+        this.VARS_PER_CLAUSE = varsPerClause;
         this.rnd = rnd;
         this.varMap = new HashMap<>();
         this.indexToIDList = new ArrayList<>();

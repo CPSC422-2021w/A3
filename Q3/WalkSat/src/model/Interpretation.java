@@ -1,8 +1,7 @@
 package model;
 
-import main.WalkSat;
-
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Interpretation {
     private final Map<Integer, Variable> varMap;
@@ -14,13 +13,14 @@ public class Interpretation {
     private void generateVars(int numVars, Random rnd){
         for (int i = 0; i < numVars; i++) {
             boolean isTrue = rnd.nextBoolean();
-            Variable var = new Variable(i, isTrue);
-            varMap.put(i, var);
+            int id = i * rnd.nextInt(100);
+            Variable var = new Variable(id, isTrue);
+            varMap.put(id, var);
         }
     }
 
-    public Collection<Variable> getVarList() {
-        return Collections.unmodifiableCollection(varMap.values());
+    public List<Variable> getVarList() {
+        return varMap.values().stream().collect(Collectors.toUnmodifiableList());
     }
 
     public boolean isVarTrue(Variable var){

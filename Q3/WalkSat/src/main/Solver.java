@@ -15,11 +15,11 @@ public class Solver implements Callable<Integer> {
     private final Map<Variable, Integer> numSatisfiedMap;
     private final Random rnd = new Random();
 
-    public Solver(int numClauses, int PROB_RND, int numVars) {
+    public Solver(int numClauses, int PROB_RND, int numVars, int varsPerClause) {
         this.PROB_RND_WALK = PROB_RND;
         interpretation = new Interpretation(numVars, rnd);
-        List<Variable> varList = new ArrayList<>(interpretation.getVarList());
-        sentence = new Sentence(numClauses, varList, rnd);
+        List<Variable> varList = interpretation.getVarList();
+        sentence = new Sentence(numClauses, varList, varsPerClause, rnd);
         numSatisfiedMap = new HashMap<>();
     }
 
@@ -36,6 +36,7 @@ public class Solver implements Callable<Integer> {
             Clause clause = unsatisfiedClauses.get(nextClause);
             Variable varToFlip;
             if (rnd.nextInt(100) < PROB_RND_WALK) {
+                // Random Walk
                 varToFlip = clause.getRandomVar();
             } else {
                 varToFlip = getBestVarToFlip(clause);

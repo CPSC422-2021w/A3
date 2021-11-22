@@ -12,26 +12,26 @@ public class Sentence {
     private final int numVars;
     private final Random rnd;
 
-    public Sentence(int numClause, List<Variable> varList, Random rnd){
+    public Sentence(int numClause, List<Variable> varList, int varsPerClause, Random rnd){
         this.numClause = numClause;
         this.numVars = varList.size();
         clauses = new ArrayList<>();
         this.varList = varList;
         this.rnd = rnd;
-       generateClauses();
+       generateClauses(varsPerClause);
     }
 
     //Generates random clauses. Guarantees that all variable will be used if numClause >= varList.size()
     // If the number of unused variables >= number of clauses left to create, select an unused variable
     // else If the number of unused variables > 1/2 numbef of clauses left to create, 50% chance of selecting unused var
     // else select random var
-    private void generateClauses(){
+    private void generateClauses(int varsPerClause){
         List<Variable> unusedVarList = new ArrayList<>(varList);
         Set<Clause> clausesSet = new HashSet<>();
         int clausesLeft;
 
         while ((clausesLeft = numClause - clausesSet.size()) > 0) {
-            Clause clause = new Clause(rnd);
+            Clause clause = new Clause(varsPerClause, rnd);
             Variable var;
             do { // do this until clause.addToList returns false -> it is full
                 boolean isTrue = rnd.nextBoolean();
