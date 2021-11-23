@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Clause implements Iterable<Variable>{
 
-    public static final int VARS_PER_CLAUSE = 3;
+    public static final int VARS_PER_CLAUSE = WalkSat.VARS_PER_CLAUSE;
     private final Map<Integer, Variable> varMap;
     private final List<Integer> indexToIDList;
 
@@ -44,34 +44,16 @@ public class Clause implements Iterable<Variable>{
     }
 
     @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-
-        str.append("(");
-        int ctr = 0;
-        for (Variable var: varMap.values()) {
-            str.append(var.toString());
-            if (ctr < 2) {
-                str.append(" v ");
-            }
-            ctr++;
-        }
-        str.append(")");
-
-        return str.toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Clause clause = (Clause) o;
-        return Objects.equals(toString(), clause.toString());
+        return varMap.equals(clause.varMap);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(toString());
+        return Objects.hash(varMap);
     }
 
     @Override

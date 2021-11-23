@@ -35,9 +35,4 @@ public class Variable {
     public int hashCode() {
         return Objects.hash(isTrue, id);
     }
-
-    @Override
-    public String toString() {
-        return isTrue ? "" + id: "~" + id;
-    }
 }

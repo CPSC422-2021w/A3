@@ -1,0 +1,6 @@
+Number of clauses,Number of completed runs,Median Number of Flips,Total Runs,C/N
+20,10,2,10,C/N = 1
+40,10,9,10,C/N = 2
+60,10,36,10,C/N = 3
+80,7,122,10,C/N = 4
+100,2,525,10,C/N = 5

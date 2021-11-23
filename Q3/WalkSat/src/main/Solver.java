@@ -9,43 +9,32 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class Solver implements Callable<Integer> {
-    private static final int PROB_RND = 0; // 1-PROB_RND% of the time, be greedy. PROB_RND% of the time, do random walk
-    private static final int numVars = 20;
+    private static final int PROB_RND = WalkSat.PROB_RND; // (1-PROB_RND)% of the time, be greedy. (PROB_RND)% of the time, do random walk
+    private static final int numVars = WalkSat.numVars;
     private final Sentence sentence;
     private final Interpretation interpretation;
-    private final List<Variable> varList;
     private final Map<Variable, Integer> numSatisfiedMap;
 
     public Solver(int numClauses) {
         interpretation = new Interpretation(numVars);
-        this.varList = new ArrayList<>(interpretation.getVarList());
+        List<Variable> varList = new ArrayList<>(interpretation.getVarList());
         sentence = new Sentence(numClauses, varList);
         numSatisfiedMap = new HashMap<>();
     }
 
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append(sentence);
-        str.append("\nInterpretation: \n");
-        for (Variable var : varList) {
-            str.append(var);
-            str.append(" -- numSat: ");
-            str.append(sentence.getNumSatisfiedClausesByVar(var));
-            str.append("\n");
-        }
-
-        return str.toString();
-    }
-
+    // Loop until all clauses are satisfied
+    // Select a random clause, then with Prob(PROB_RND) select a random var and flip it,
+    // otherwise, select the var that yields highest improvement in # of satisfied clauses and flip it
+    // Returns number of flips performed
     public int solve() {
         int numFlips = 0;
         List<Clause> unsatisfiedClauses = sentence.getUnsatisfiedClauses(interpretation);
 
-        while (unsatisfiedClauses.size() != 0) {
+        while (!unsatisfiedClauses.isEmpty()) {
             int nextClause = WalkSat.RND.nextInt(unsatisfiedClauses.size());
             Clause clause = unsatisfiedClauses.get(nextClause);
             Variable varToFlip;
-            if (WalkSat.RND.nextInt(100) > PROB_RND) {
+            if (WalkSat.RND.nextInt(100) < PROB_RND) {
                 varToFlip = clause.getRandomVar();
             } else {
                 varToFlip = getBestVarToFlip(clause);
@@ -58,6 +47,9 @@ public class Solver implements Callable<Integer> {
         return numFlips;
     }
 
+    // Iterate over vars in given clause,
+    // return var to flip with most improved number of satisifed clauses
+    // Returns null if no var can improve current count of satisfied clauses
     private Variable getBestVarToFlip(Clause clause){
         Variable varToFlip = null;
         int max = 0;
@@ -65,7 +57,7 @@ public class Solver implements Callable<Integer> {
             int currSatisfied = getNumClauseSatisfied(var);
             Variable tempVar = new Variable(var.getId(), !interpretation.isVarTrue(var));
             int satisfied = getNumClauseSatisfied(tempVar) - currSatisfied;
-            if (satisfied < 0) continue;
+            if (satisfied < 0) continue; // current interpretation is better
 
             if (satisfied > max) {
                 max = satisfied;

@@ -23,25 +23,11 @@ public class Interpretation {
         return Collections.unmodifiableCollection(varMap.values());
     }
 
-    public boolean isVarTrue(Variable variable){
-        return varMap.get(variable.getId()).isTrue();
+    public boolean isVarTrue(Variable var){
+        return varMap.get(var.getId()).isTrue();
     }
 
     public void flip(Variable var){
         varMap.get(var.getId()).flip();
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-
-        str.append("Interpretation: ");
-        for (Variable var: varMap.values()){
-            str.append(var);
-            str.append(", ");
-        }
-
-        return str.toString();
     }
 }
