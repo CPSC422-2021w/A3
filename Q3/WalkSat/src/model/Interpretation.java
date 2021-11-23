@@ -11,7 +11,7 @@ public class Interpretation {
     }
 
     private void generateVars(int numVars, Random rnd){
-        for (int i = 0; i < numVars; i++) {
+        for (int i = 0; varMap.size() < numVars; i++) {
             boolean isTrue = rnd.nextBoolean();
             int id = i * rnd.nextInt(100);
             Variable var = new Variable(id, isTrue);
