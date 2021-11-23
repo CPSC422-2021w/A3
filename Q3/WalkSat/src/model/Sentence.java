@@ -32,7 +32,6 @@ public class Sentence {
 
         while (clausesLeft > 0) {
             // clauses left to generate
-            clausesLeft = numClause - clausesSet.size();
             Clause clause = new Clause(varsPerClause, rnd);
             Variable var;
             do { // do this until clause.addToList returns false -> it is full
@@ -48,6 +47,7 @@ public class Sentence {
 
             } while (clause.addToList(var));
             clausesSet.add(clause);
+            clausesLeft = numClause - clausesSet.size();
         }
         clauses.addAll(clausesSet);
     }
