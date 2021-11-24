@@ -19,52 +19,23 @@ enum class NODE {
     D = 3
 };
 
-struct nodeA {
+struct node {
     public:
     float value;
 
-    nodeA() {};
-    nodeA(float v) {
-        value = v;
-    }
-};
-
-struct nodeB {
-    public:
-    float value;
-
-    nodeB() {};
-    nodeB(float v) {
-        value = v;
-    }
-};
-
-struct nodeC {
-    public:
-    float value;
-
-    nodeC() {};
-    nodeC(float v) {
-        value = v;
-    }
-};
-
-struct nodeD {
-    public:
-    float value;
-
-    nodeD() {};
-    nodeD(float v) {
+    node() {};
+    node(float v) {
         value = v;
     }
 };
 
 struct Nodes {
-    nodeA A;
-    nodeB B;
-    nodeC C;
-    nodeD D;
+    node A;
+    node B;
+    node C;
+    node D;
 };
+
 // [D, A]
 map<pair<int, int>, int> factor4 = {
     { {0, 0}, 100 },
